@@ -20,10 +20,12 @@ import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.transform.Rotate;
+import javafx.scene.transform.Scale;
 import javafx.scene.transform.Translate;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 
+import javax.net.ssl.HostnameVerifier;
 import java.awt.event.ActionEvent;
 
 public class Main extends Application {
@@ -36,6 +38,11 @@ public class Main extends Application {
         Scene scene = new Scene(root,800,600);
         primaryStage.setTitle("Polyglot Sidequest: Thirdly");
         primaryStage.setScene(scene);
+
+        //Crea cuadrado
+        Rectangle cuadrado = new Rectangle(10,100,100,100);
+        cuadrado.setFill(Color.SKYBLUE);
+        cuadrado.setStrokeWidth(5);
 
         //labels
         Label escalado = new Label("Escalado:");
@@ -58,31 +65,25 @@ public class Main extends Application {
         spinnerT.setValueFactory(valueFactoryT);
 
         //Botones de inicio y fin
-        Button buttonE = new Button("Iniciar");
+        Button buttonE = new Button("Aplicar");
         Button buttonR = new Button("Iniciar");
         Button buttonT = new Button("Iniciar");
 
-        Button buttonEs = new Button("Parar");
         Button buttonRo = new Button("Parar");
         Button buttonTr = new Button("Parar");
 
         //Organizando
-        VBox label = new VBox( 30, escalado, rotacion, traslacion );
-        VBox spinner = new VBox( 20, spinnerE, spinnerR, spinnerT );
-        VBox buttonStart = new VBox( 20, buttonE , buttonR, buttonT );
-        VBox buttonStop = new VBox( 20, buttonEs , buttonRo, buttonTr );
+        VBox label = new VBox( 30, rotacion, traslacion, escalado);
+        VBox spinner = new VBox( 20, spinnerE, spinnerR, spinnerT);
+        VBox buttonStart = new VBox( 20, buttonR, buttonT, buttonE);
+        VBox buttonStop = new VBox( 20, buttonRo, buttonTr );
 
         HBox buttonBar = new HBox(5,label,spinner,buttonStart,buttonStop);
 
-        buttonEs.setDisable(false);
+        VBox completo = new VBox(100,buttonBar,cuadrado);
+
         buttonRo.setDisable(false);
         buttonTr.setDisable(false);
-
-
-        //Crea cuadrado
-        Rectangle cuadrado = new Rectangle(200,200,200,200);
-        cuadrado.setFill(Color.SKYBLUE);
-        cuadrado.setStrokeWidth(5);
 
         //Inicializando clase RotateTransition para Rotacion
         RotateTransition rotate = new RotateTransition();
@@ -95,9 +96,55 @@ public class Main extends Application {
         translate.setByX(400); //Cambiando coordenadas en x
         translate.setCycleCount(500); //Conteo de ciclos de rotacion
 
+        //Creando escalado en 2D
+        Scale scale = new Scale();
+
+        //Valores iniciales en x ^ y
+        scale.setX(-1.5);
+        scale.setY(1.5);
+
 
         //Evento para el boton Escalado
         buttonE.setOnAction(event -> {
+
+            //Configuracion de escalado
+            if (valueFactoryE.getValue()==1){
+                //setting the pivot points along which the scaling is done
+                scale.setPivotX(50);
+                scale.setPivotY(50);
+
+                //applying transformations on the 2nd circle
+                cuadrado.getTransforms().add(scale);
+            }else if(valueFactoryE.getValue()==2){
+                //setting the pivot points along which the scaling is done
+                scale.setPivotX(100);
+                scale.setPivotY(100);
+
+                //applying transformations on the 2nd circle
+                cuadrado.getTransforms().add(scale);
+            }else if(valueFactoryE.getValue()==3){
+                //setting the pivot points along which the scaling is done
+                scale.setPivotX(150);
+                scale.setPivotY(150);
+
+                //applying transformations on the 2nd circle
+                cuadrado.getTransforms().add(scale);
+            }else if(valueFactoryE.getValue()==4){
+                //setting the pivot points along which the scaling is done
+                scale.setPivotX(200);
+                scale.setPivotY(200);
+
+                //applying transformations on the 2nd circle
+                cuadrado.getTransforms().add(scale);
+            }else if(valueFactoryE.getValue()==5){
+                //setting the pivot points along which the scaling is done
+                scale.setPivotX(250);
+                scale.setPivotY(250);
+
+                //applying transformations on the 2nd circle
+                cuadrado.getTransforms().add(scale);
+            }
+
         });
 
         //Evento para el boton Rotacion
@@ -154,22 +201,22 @@ public class Main extends Application {
                 translate.setNode(cuadrado);
                 translate.play(); //inicia traslacion
             }else if(valueFactoryT.getValue()==2){
-                translate.setDuration(Duration.millis(3000)); //duracion
+                translate.setDuration(Duration.millis(2000)); //duracion
                 translate.setAutoReverse(true);
                 translate.setNode(cuadrado);
                 translate.play(); //inicia traslacion
             }else if(valueFactoryT.getValue()==3){
-                translate.setDuration(Duration.millis(3000)); //duracion
+                translate.setDuration(Duration.millis(1500)); //duracion
                 translate.setAutoReverse(true);
                 translate.setNode(cuadrado);
                 translate.play(); //inicia traslacion
             }else if(valueFactoryT.getValue()==4){
-                translate.setDuration(Duration.millis(3000)); //duracion
+                translate.setDuration(Duration.millis(1000)); //duracion
                 translate.setAutoReverse(true);
                 translate.setNode(cuadrado);
                 translate.play(); //inicia traslacion
             }else if(valueFactoryT.getValue()==5){
-                translate.setDuration(Duration.millis(3000)); //duracion
+                translate.setDuration(Duration.millis(500)); //duracion
                 translate.setAutoReverse(true);
                 translate.setNode(cuadrado);
                 translate.play(); //inicia traslacion
@@ -184,8 +231,7 @@ public class Main extends Application {
         });
 
 
-        root.getChildren().add(cuadrado);
-        root.getChildren().add(buttonBar);
+        root.getChildren().add(completo);
 
         primaryStage.show();
     }
