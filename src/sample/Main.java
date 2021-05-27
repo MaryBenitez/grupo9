@@ -1,6 +1,7 @@
 package sample;
 
 import javafx.animation.RotateTransition;
+import javafx.animation.TranslateTransition;
 import javafx.application.Application;
 import javafx.event.EventHandler;
 import javafx.fxml.FXMLLoader;
@@ -30,23 +31,13 @@ public class Main extends Application {
     @Override
     public void start(Stage primaryStage) throws Exception{
 
-        //Configuring Group and Scene
+        //Configurando Group and Scene
         Group root = new Group();
         Scene scene = new Scene(root,800,600);
         primaryStage.setTitle("Polyglot Sidequest: Thirdly");
         primaryStage.setScene(scene);
 
-        //Creating Rectangle
-        Rectangle rect = new Rectangle(200,200,200,200);
-        rect.setFill(Color.SKYBLUE);
-        rect.setStrokeWidth(5);
-
-        //Instantiating RotateTransition class
-        RotateTransition rotate = new RotateTransition();
-        rotate.setAxis(Rotate.Z_AXIS);
-        rotate.setByAngle(360);
-        rotate.setCycleCount(500);
-
+        //labels
         Label escalado = new Label("Escalado:");
         final Spinner<Integer> spinnerE = new Spinner<Integer>();
         Label rotacion = new Label("Rotacion:");
@@ -54,6 +45,7 @@ public class Main extends Application {
         Label traslacion = new Label("Traslacion:");
         final Spinner<Integer> spinnerT = new Spinner<Integer>();
 
+        //Numero inicializador del spinner
         final int initialValue = 1;
 
         // Value factory
@@ -65,6 +57,7 @@ public class Main extends Application {
         spinnerR.setValueFactory(valueFactoryR);
         spinnerT.setValueFactory(valueFactoryT);
 
+        //Botones de inicio y fin
         Button buttonE = new Button("Iniciar");
         Button buttonR = new Button("Iniciar");
         Button buttonT = new Button("Iniciar");
@@ -73,6 +66,7 @@ public class Main extends Application {
         Button buttonRo = new Button("Parar");
         Button buttonTr = new Button("Parar");
 
+        //Organizando
         VBox label = new VBox( 30, escalado, rotacion, traslacion );
         VBox spinner = new VBox( 20, spinnerE, spinnerR, spinnerT );
         VBox buttonStart = new VBox( 20, buttonE , buttonR, buttonT );
@@ -84,48 +78,113 @@ public class Main extends Application {
         buttonRo.setDisable(false);
         buttonTr.setDisable(false);
 
+
+        //Crea cuadrado
+        Rectangle cuadrado = new Rectangle(200,200,200,200);
+        cuadrado.setFill(Color.SKYBLUE);
+        cuadrado.setStrokeWidth(5);
+
+        //Inicializando clase RotateTransition para Rotacion
+        RotateTransition rotate = new RotateTransition();
+        rotate.setAxis(Rotate.Z_AXIS); //Eje de rotacion
+        rotate.setByAngle(360); //Angulo de rotacion
+        rotate.setCycleCount(500); //Conteo de ciclos de rotacion
+
+        //Inicializando clase TranslateTransition para Traslacion
+        TranslateTransition translate = new TranslateTransition();
+        translate.setByX(400); //Cambiando coordenadas en x
+        translate.setCycleCount(500); //Conteo de ciclos de rotacion
+
+
+        //Evento para el boton Escalado
+        buttonE.setOnAction(event -> {
+        });
+
+        //Evento para el boton Rotacion
         buttonR.setOnAction(event -> {
             buttonR.setDisable(true);
             buttonRo.setDisable(false);
 
-            //Setting duration of the transition
+            //Configuracion de rotacion y duracion
             if (valueFactoryR.getValue()==1){
-                rotate.setDuration(Duration.millis(3000)); //velocidad
-                rotate.setAutoReverse(true);
-                rotate.setNode(rect);
+                rotate.setDuration(Duration.millis(3000)); //duracion
+                rotate.setAutoReverse(true); //autorotacion en reversa
+                rotate.setNode(cuadrado);
                 rotate.play(); //inicia rotacion
             }else if(valueFactoryR.getValue()==2){
-                rotate.setDuration(Duration.millis(2000)); //velocidad
-                rotate.setAutoReverse(true);
-                rotate.setNode(rect);
+                rotate.setDuration(Duration.millis(2000)); //duracion
+                rotate.setAutoReverse(true); //autorotacion en reversa
+                rotate.setNode(cuadrado);
                 rotate.play();
             }else if(valueFactoryR.getValue()==3){
-                rotate.setDuration(Duration.millis(1500)); //velocidad
-                rotate.setAutoReverse(true);
-                rotate.setNode(rect);
+                rotate.setDuration(Duration.millis(1500)); //duracion
+                rotate.setAutoReverse(true); //autorotacion en reversa
+                rotate.setNode(cuadrado);
                 rotate.play(); //inicia rotacion
             }else if(valueFactoryR.getValue()==4){
-                rotate.setDuration(Duration.millis(1000)); //velocidad
-                rotate.setAutoReverse(true);
-                rotate.setNode(rect);
+                rotate.setDuration(Duration.millis(1000)); //duracion
+                rotate.setAutoReverse(true); //autorotacion en reversa
+                rotate.setNode(cuadrado);
                 rotate.play(); //inicia rotacion
             }else if(valueFactoryR.getValue()==5){
-                rotate.setDuration(Duration.millis(500)); //velocidad
-                rotate.setAutoReverse(true);
-                rotate.setNode(rect);
+                rotate.setDuration(Duration.millis(500)); //duracion
+                rotate.setAutoReverse(true); //autorotacion en reversa
+                rotate.setNode(cuadrado);
                 rotate.play(); //inicia rotacion
             }
         });
 
+        //Evento para detener rotacion
         buttonRo.setOnAction(event -> {
-            //Detiene rotacion
-            rotate.stop();
+            rotate.stop(); //Detiene rotacion
             buttonRo.setDisable(true);
             buttonR.setDisable(false);
         });
 
+        //Evento para el boton Traslacion
+        buttonT.setOnAction(event -> {
 
-        root.getChildren().add(rect);
+            buttonT.setDisable(true);
+            buttonTr.setDisable(false);
+
+            //Configuracion de traslacion y duracion
+            if (valueFactoryT.getValue()==1){
+                translate.setDuration(Duration.millis(3000)); //duracion
+                translate.setAutoReverse(true);
+                translate.setNode(cuadrado);
+                translate.play(); //inicia traslacion
+            }else if(valueFactoryT.getValue()==2){
+                translate.setDuration(Duration.millis(3000)); //duracion
+                translate.setAutoReverse(true);
+                translate.setNode(cuadrado);
+                translate.play(); //inicia traslacion
+            }else if(valueFactoryT.getValue()==3){
+                translate.setDuration(Duration.millis(3000)); //duracion
+                translate.setAutoReverse(true);
+                translate.setNode(cuadrado);
+                translate.play(); //inicia traslacion
+            }else if(valueFactoryT.getValue()==4){
+                translate.setDuration(Duration.millis(3000)); //duracion
+                translate.setAutoReverse(true);
+                translate.setNode(cuadrado);
+                translate.play(); //inicia traslacion
+            }else if(valueFactoryT.getValue()==5){
+                translate.setDuration(Duration.millis(3000)); //duracion
+                translate.setAutoReverse(true);
+                translate.setNode(cuadrado);
+                translate.play(); //inicia traslacion
+            }
+        });
+
+        //Evento para detener rotacion
+        buttonTr.setOnAction(event -> {
+            translate.stop(); //Detiene rotacion
+            buttonTr.setDisable(true);
+            buttonT.setDisable(false);
+        });
+
+
+        root.getChildren().add(cuadrado);
         root.getChildren().add(buttonBar);
 
         primaryStage.show();
